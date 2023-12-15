@@ -1,7 +1,11 @@
 import React from 'react'
-import { Counter } from './components/Counter'
 import './styles/Application.scss'
+import Card from './components/Card/Card'
 
 export default function App() {
-  return <div>App</div>
+  return (
+    <div>
+      <Card />
+    </div>
+  )
 }
