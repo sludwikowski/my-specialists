@@ -1,5 +1,11 @@
 @import './Theme.scss';
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 html,
 body,
 #app {
@@ -13,4 +19,124 @@ body {
     background-color: var(--very-light-purple);
     padding: 60px 266px 358px 269px;
     line-height: 1.5;
+}
+
+nav {
+    margin: 52px 20px 4px 20px;
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    margin: 24px 0;
+
+}
+
+h3 {
+    font-size: 30px;
+    font-weight: 600;
+    color: #0f1d38;
+}
+
+h4 {
+    margin: 11px 12px 0px 9px;
+    font-size: 19px;
+    font-weight: 600;
+    text-align: center;
+    color: #0f1d38;
+}
+
+p {
+    font-size: 14px;
+    color: var(--bluey-grey);
+    text-align: center;
+}
+
+span {
+    font-size: 12px;
+    text-align: center;
+    color: var(--bluey-grey);
+}
+
+ul {
+    list-style: none;
+}
+
+.container {
+    padding: 0 20px;
+}
+
+.card {
+    width: 323px;
+    height: 442px;
+    border-radius: 4px;
+    box-shadow: 0px 3px 13px 0 rgba(231, 234, 247, 0.35);
+    background-color: var(--white-color);
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 20px;
+
+        .btn {
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+
+            &.btn {
+                color: var(--cloudy-blue);
+                background-color: transparent;
+            }
+        }
+    }
+
+    .avatar-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .avatar {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+        border-radius: 50%;
+    }
+
+    .rating-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        border-top: 1px solid var(--pale-grey);
+        border-bottom: 1px solid var(--pale-grey);
+
+    }
+
+    .stars {
+        display: flex;
+        margin: 0 20px;
+    }
+
+    .rating-info {
+        margin: 0 20px;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-btn {
+        width: 50%;
+        font-size: 12px;
+        border: none;
+        cursor: pointer;
+        letter-spacing: 0.24px;
+        text-align: center;
+        color: var(--bluey-grey);
+        background-color: transparent;
+    }
 }
