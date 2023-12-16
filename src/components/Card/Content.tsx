@@ -6,15 +6,9 @@ import Star from './Star'
 import Navigation from './Navigation'
 import { RootState } from '@src/app/store'
 import { addRating } from '@src/features/ratingSlice'
+import { CardProps } from '@src/types'
 
-interface CardContentProps {
-  id: number
-  name: string
-  title: string
-  avatar: string
-}
-
-export default function CardContent({ id, name, title, avatar }: CardContentProps) {
+export default function CardContent({ id, name, specialization, avatar }: CardProps) {
   const dispatch = useDispatch()
   const totalRatings = useSelector((state: RootState) => state.rating.totalRatings[id] || 0)
   const numRatings = useSelector((state: RootState) => state.rating.numRatings[id] || 0)
@@ -35,12 +29,11 @@ export default function CardContent({ id, name, title, avatar }: CardContentProp
       </div>
       <header>
         <h4>{name}</h4>
-        <p>{title}</p>
+        <p>{specialization}</p>
       </header>
       <Navigation />
       <section className="rating-section">
         <div className="stars">
-          {' '}
           {selectedStars.map((isSelected, index) => (
             <div onClick={() => handleClick(index)} key={index}>
               <Star selected={isSelected} />

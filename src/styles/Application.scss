@@ -13,22 +13,33 @@ body,
 }
 
 body {
-    padding: 60px 266px 358px 269px;
+
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
     font-size: var(--app-font-size);
     font-family: var(--app-font-family);
     background-color: var(--very-light-purple);
     line-height: 1.5;
 }
 
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 1300px;
+}
+
 nav {
-    margin: 52px 20px 4px 20px;
+    margin: 30px 20px 4px 20px;
 }
 
 footer {
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin: 24px 0;
+
+    margin: 0;
 }
 
 h3,
@@ -39,6 +50,8 @@ h4 {
 
 h3 {
     font-size: 30px;
+    max-width: 150px;
+    white-space: nowrap;
 }
 
 h4 {
@@ -65,6 +78,7 @@ ul {
 }
 
 input[type="search"] {
+    cursor: pointer;
     border: none;
     background: transparent;
     margin: 0;
@@ -73,30 +87,64 @@ input[type="search"] {
     color: inherit;
     border: 1px solid transparent;
     border-radius: inherit;
+    padding-left: 40px;
+
 }
 
 input[type="search"]::placeholder {
+
     color: #bbb;
+}
+
+input[type="search"]:focus {
+    position: relative;
+    max-width: 200px;
+    height: 50px;
+    box-shadow: 0px 3px 16px 0 rgba(216, 220, 237, 0.52);
+    background-color: #fff;
+    outline: none;
 }
 
 
 
 .container {
-    padding: 0 20px;
+    padding: 0;
+}
+
+.icon-hover {
+    position: relative;
+
+    &:hover {
+        color: blue;
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 100%;
+            width: 100%;
+            border-bottom: 1px solid blue;
+        }
+    }
 }
 
 .card {
-    width: 323px;
-    height: 442px;
+    width: 300px;
+
     border-radius: 4px;
     box-shadow: var(--shadow);
     background-color: var(--white-color);
+
+    &:hover {
+        border: 1px solid var(--light-royal-blue);
+    }
 
     .card-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding-top: 20px;
+        padding: 0 10px;
+
 
         .btn {
             border: none;
@@ -142,8 +190,13 @@ input[type="search"]::placeholder {
         text-align: center;
     }
 
+    .container {
+        height: 40px;
+    }
+
     .footer-btn {
-        width: 50%;
+        width: 100%;
+        height: 100%;
         font-size: 12px;
         border: none;
         cursor: pointer;
@@ -152,8 +205,110 @@ input[type="search"]::placeholder {
         color: var(--bluey-grey);
         background-color: transparent;
     }
+
+    .footer-btn:hover {
+
+        background-color: blue;
+        color: white
+    }
 }
 
-.heart-blue {
-    background-color: blue;
+.search {
+    position: relative
+}
+
+.search-img {
+    position: absolute;
+    left: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.star {
+    cursor: pointer;
+    margin-right: 4px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    width: 100%;
+}
+
+
+.nav__btn-container {
+    display: flex;
+}
+
+.nav-btn {
+    cursor: pointer;
+    width: 200px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    padding: 19px 63px 20px 62px;
+    margin-left: 2px;
+    background-color: var(--light-royal-blue);
+    color: var(--white-color);
+    white-space: nowrap;
+
+    &.inactive {
+        border: solid 1px #e2e4ec;
+        background-color: #f3f5fc;
+        color: var(--bluey-grey);
+
+        &:hover {
+            color: var(--light-royal-blue);
+        }
+    }
+}
+
+.btn-right:hover {
+    cursor: pointer;
+    border-radius: 4px;
+
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav__btn-container {
+        flex-direction: column;
+
+        margin-bottom: 20px;
+    }
+
+    .nav-btn,
+    .nav-btn-inactive {
+        width: 100%;
+        margin-bottom: 10px;
+
+    }
+
+    .search {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .search-input {
+        width: 100%;
+    }
+
+    .card {
+        width: 100%;
+        height: auto;
+    }
 }

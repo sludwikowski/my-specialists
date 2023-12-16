@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import _ from 'lodash'
 
@@ -8,23 +8,32 @@ import { selectData } from '../features/dataSlice'
 import { RootState, AppDispatch } from '../app/store'
 import { setSearch } from '../features/searchSlice'
 import Card from './Card/Card'
-import { icons } from './icon/Icons'
-
-export interface Specialist {
-  id: number
-  name: string
-  specialization: string
-  avatar: string
-}
+import { CardProps } from '@src/types'
+import { SearchInput } from './Card/SearchInput'
 
 export default function List() {
   const dispatch: AppDispatch = useDispatch()
   const data = useSelector((state: RootState) => selectData(state))
   const search: string = useSelector((state: RootState) => state.search.value)
   const [inputValue, setInputValue] = useState('')
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
-  const [tab, setTab] = useState<'all' | 'my'>('all') // Nowy stan dla zakładki
-  const mySpecialists: Specialist[] = useSelector((state: RootState) => state.mySpecialists.value) // Pobieramy listę "My Specialists" ze store Redux
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth)
+
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
+  const columnCount = windowWidth <= 768 ? 1 : 3
+  const columnWidth = windowWidth <= 768 ? windowWidth : 400
+  const gridWidth = windowWidth > 1200 ? 1200 : windowWidth
+
+  const [tab, setTab] = useState<'all' | 'my'>('all')
+  const mySpecialists: CardProps[] = useSelector((state: RootState) => state.mySpecialists.value)
 
   const rowHeight = 442
   const padding = 20
@@ -35,23 +44,26 @@ export default function List() {
     }
   }, 300)
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const searchValue = e.target.value
-    setInputValue(searchValue)
-    debouncedDispatch(searchValue)
-  }
+  const handleSearchChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const searchValue = e.target.value
+      setInputValue(searchValue)
+      debouncedDispatch(searchValue)
+    },
+    [setInputValue, debouncedDispatch]
+  )
 
-  const filteredData = useMemo<Specialist[]>(() => {
-    const specialists = tab === 'all' ? data : mySpecialists // Wybieramy dane na podstawie wybranej zakładki
+  const filteredData = useMemo<CardProps[]>(() => {
+    const specialists = tab === 'all' ? data : mySpecialists
 
     return specialists
       .filter(
-        (item: Specialist) =>
+        (item: CardProps) =>
           item.name.toLowerCase().startsWith(search.toLowerCase()) ||
           item.specialization.toLowerCase().startsWith(search.toLowerCase())
       )
-      .sort((a: Specialist, b: Specialist) => a.specialization.localeCompare(b.specialization))
-  }, [data, search, mySpecialists, tab]) // Dodajemy mySpecialists i tab do listy zależności
+      .sort((a: CardProps, b: CardProps) => a.specialization.localeCompare(b.specialization))
+  }, [data, search, mySpecialists, tab])
 
   const cardRenderer = ({ columnIndex, rowIndex, style }: GridChildComponentProps) => {
     const index = rowIndex * 3 + columnIndex
@@ -77,42 +89,32 @@ export default function List() {
 
   return (
     <main>
-      <header style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '50px' }}>
-        <h3>Favorite specialists ({tab === 'all' ? data.length : mySpecialists.length})</h3>{' '}
-        <div>
-          <button style={{ padding: '10px 40px', width: '200px' }} onClick={() => setTab('all')}>
+      <header className="header">
+        <h3>
+          {tab === 'all'
+            ? `Favorite specialists (${data.length})`
+            : `My specialists (${mySpecialists.length})`}
+        </h3>
+        <div className="nav__btn-container">
+          <button className={tab === 'all' ? 'nav-btn' : 'nav-btn'} onClick={() => setTab('all')}>
             All favorite
           </button>
-          <button style={{ padding: '10px 40px', width: '200px' }} onClick={() => setTab('my')}>
+          <button
+            className={tab === 'my' ? 'nav-btn inactive' : 'nav-btn inactive'}
+            onClick={() => setTab('my')}>
             My specialists
           </button>
         </div>
-        <form className="nosubmit">
-          <div style={{ position: 'relative' }}>
-            <input
-              className="nosubmit"
-              type="search"
-              placeholder="Search..."
-              style={{ paddingLeft: '30px' }}
-              value={inputValue}
-              onChange={handleSearchChange}
-            />
-            <img
-              src={icons.search}
-              alt="search"
-              style={{ position: 'absolute', left: '4px', top: '50%', transform: 'translateY(-50%)' }}
-            />
-          </div>
-        </form>
+        <SearchInput value={inputValue} onChange={handleSearchChange} />
       </header>
-      <section style={{ height: '900px', width: '100%' }}>
+      <section>
         <Grid
-          columnCount={3}
-          columnWidth={400}
+          columnCount={columnCount}
+          columnWidth={columnWidth}
           height={900}
-          rowCount={Math.ceil(filteredData.length / 3)}
+          rowCount={Math.ceil(filteredData.length / columnCount)}
           rowHeight={rowHeight + padding}
-          width={1200}>
+          width={gridWidth}>
           {cardRenderer}
         </Grid>
       </section>

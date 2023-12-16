@@ -8,13 +8,7 @@ import CardFooter from './Footer'
 import { addSpecialist, removeSpecialist } from '../../features/mySpecialistsSlice'
 import { RootState } from '@src/app/store'
 import { icons } from '../icon/Icons'
-
-interface CardProps {
-  id: number
-  name: string
-  specialization: string
-  avatar: string
-}
+import { CardProps } from '@src/types'
 
 export default function Card({ id, name, specialization, avatar }: CardProps) {
   const dispatch = useDispatch()
@@ -33,7 +27,7 @@ export default function Card({ id, name, specialization, avatar }: CardProps) {
   return (
     <div className="card">
       <CardHeader
-        buttonLeftIcon={<MoreHorizontal />}
+        buttonLeftIcon={<MoreHorizontal className="icon-hover" />}
         buttonRightIcon={
           <div title={isOnList ? 'Remove from favorites' : 'Add to favorites'}>
             {isOnList ? (
@@ -44,7 +38,7 @@ export default function Card({ id, name, specialization, avatar }: CardProps) {
           </div>
         }
       />
-      <CardContent id={id} avatar={avatar} name={name} title={specialization} />
+      <CardContent id={id} avatar={avatar} name={name} specialization={specialization} />
       <CardFooter />
     </div>
   )
