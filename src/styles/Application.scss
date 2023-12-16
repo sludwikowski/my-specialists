@@ -13,11 +13,10 @@ body,
 }
 
 body {
-    margin: 0;
+    padding: 60px 266px 358px 269px;
     font-size: var(--app-font-size);
     font-family: var(--app-font-family);
     background-color: var(--very-light-purple);
-    padding: 60px 266px 358px 269px;
     line-height: 1.5;
 }
 
@@ -27,42 +26,60 @@ nav {
 
 footer {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     margin: 24px 0;
+}
 
+h3,
+h4 {
+    font-weight: 600;
+    color: var(--black-color);
 }
 
 h3 {
     font-size: 30px;
-    font-weight: 600;
-    color: #0f1d38;
 }
 
 h4 {
-    margin: 11px 12px 0px 9px;
     font-size: 19px;
-    font-weight: 600;
     text-align: center;
-    color: #0f1d38;
+}
+
+p,
+span {
+    text-align: center;
+    color: var(--bluey-grey);
 }
 
 p {
     font-size: 14px;
-    color: var(--bluey-grey);
-    text-align: center;
 }
 
 span {
     font-size: 12px;
-    text-align: center;
-    color: var(--bluey-grey);
 }
 
 ul {
     list-style: none;
 }
+
+input[type="search"] {
+    border: none;
+    background: transparent;
+    margin: 0;
+    padding: 7px 8px;
+    font-size: 14px;
+    color: inherit;
+    border: 1px solid transparent;
+    border-radius: inherit;
+}
+
+input[type="search"]::placeholder {
+    color: #bbb;
+}
+
+
 
 .container {
     padding: 0 20px;
@@ -72,7 +89,7 @@ ul {
     width: 323px;
     height: 442px;
     border-radius: 4px;
-    box-shadow: 0px 3px 13px 0 rgba(231, 234, 247, 0.35);
+    box-shadow: var(--shadow);
     background-color: var(--white-color);
 
     .card-header {
@@ -85,11 +102,8 @@ ul {
             border: none;
             cursor: pointer;
             font-size: 14px;
-
-            &.btn {
-                color: var(--cloudy-blue);
-                background-color: transparent;
-            }
+            color: var(--cloudy-blue);
+            background-color: transparent;
         }
     }
 
@@ -111,15 +125,14 @@ ul {
         display: flex;
         justify-content: space-between;
         align-items: center;
-
+        padding: 5px 0;
         border-top: 1px solid var(--pale-grey);
         border-bottom: 1px solid var(--pale-grey);
-
     }
 
     .stars {
         display: flex;
-        margin: 0 20px;
+        margin: auto 20px;
     }
 
     .rating-info {
@@ -139,4 +152,8 @@ ul {
         color: var(--bluey-grey);
         background-color: transparent;
     }
+}
+
+.heart-blue {
+    background-color: blue;
 }

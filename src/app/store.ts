@@ -1,13 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit'
-import counterReducer from '../features/counter/counterSlice'
+
+import searchReducer from '../features/searchSlice'
+import dataReducer from '../features/dataSlice'
+import mySpecialistsReducer from '../features/mySpecialistsSlice'
+import ratingReducer from '../features/ratingSlice'
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    search: searchReducer,
+    data: dataReducer,
+    mySpecialists: mySpecialistsReducer,
+    rating: ratingReducer,
   },
 })
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch
