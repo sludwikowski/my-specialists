@@ -1,16 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Bell, Calendar, Mail } from 'lucide-react'
 
-// eslint-disable-next-line react/jsx-key
-const navIcons = [<Bell />, <Calendar />, <Mail />]
+const navIcons = [Bell, Calendar, Mail]
 
 export default function Navigation() {
+  const [hoveredIndex, setHoveredIndex] = useState(null)
+
   return (
-    <nav className="container">
+    <nav className={`menu ${hoveredIndex !== null ? `hovered-${hoveredIndex}` : ''}`}>
       <ul className="card-header">
-        {navIcons.map((icon, index) => (
+        {navIcons.map((Icon, index) => (
           <li key={index}>
-            <button className="btn">{icon}</button>
+            <button
+              className="btn"
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}>
+              <Icon className="icon-hover" />
+            </button>
           </li>
         ))}
       </ul>

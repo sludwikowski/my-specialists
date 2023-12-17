@@ -5,16 +5,11 @@ import { MoreHorizontal, Heart } from 'lucide-react'
 import CardHeader from './Header'
 import CardContent from './Content'
 import CardFooter from './Footer'
-import { addSpecialist, removeSpecialist } from '../../features/mySpecialistsSlice'
-import { RootState } from '@src/app/store'
 import { icons } from '../icon/Icons'
 
-interface CardProps {
-  id: number
-  name: string
-  specialization: string
-  avatar: string
-}
+import { addSpecialist, removeSpecialist } from '../../features/mySpecialistsSlice'
+import { RootState } from '@src/app/store'
+import { CardProps } from '@src/types'
 
 export default function Card({ id, name, specialization, avatar }: CardProps) {
   const dispatch = useDispatch()
@@ -31,7 +26,7 @@ export default function Card({ id, name, specialization, avatar }: CardProps) {
   }
 
   return (
-    <div className="card">
+    <section className="card">
       <CardHeader
         buttonLeftIcon={<MoreHorizontal />}
         buttonRightIcon={
@@ -44,8 +39,8 @@ export default function Card({ id, name, specialization, avatar }: CardProps) {
           </div>
         }
       />
-      <CardContent id={id} avatar={avatar} name={name} title={specialization} />
+      <CardContent id={id} avatar={avatar} name={name} specialization={specialization} />
       <CardFooter />
-    </div>
+    </section>
   )
 }

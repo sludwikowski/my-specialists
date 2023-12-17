@@ -3,6 +3,12 @@ import starBlue from '../../../assets/icons/star-blue.png'
 import starGray from '../../../assets/icons/star-gray.png'
 import search from '../../../assets/icons/search.png'
 import heart from '../../../assets/icons/heart.png'
+import message from '../../../assets/icons/message.png'
+
+import calendar from '../../../assets/icons/calendar.png'
+import calendarhover from '../../../assets/icons/calendar-hover.png'
+import bell from '../../../assets/icons/bell.png'
+import bellhover from '../../../assets/icons/bell-hover.png'
 
 export const icons = {
   avatar,
@@ -10,4 +16,9 @@ export const icons = {
   starGray,
   search,
   heart,
+  message,
+  calendar,
+  calendarhover,
+  bell,
+  bellhover,
 }
