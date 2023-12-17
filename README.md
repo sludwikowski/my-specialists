@@ -68,7 +68,14 @@ Distribution files output will be generated in `dist/` directory by default.
 To build the production ready files for distribution, use the following command :
 
 ```bash
+# using pnpm
+pnpm build
+
+# or using yarn
 yarn build
+
+# or using npm
+npm run build
 ```
 
 <br />
@@ -78,7 +85,14 @@ yarn build
 Serve helps you serve a static site, single page application or just a static file. It also provides a neat interface for listing the directory's contents. This command serves build files from `dist/` directory.
 
 ```bash
+# using pnpm
+pnpm serve
+
+# or using yarn
 yarn serve
+
+# or using npm
+npm run serve
 ```
 
 <br />
