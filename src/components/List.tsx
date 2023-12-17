@@ -5,7 +5,7 @@ import _ from 'lodash'
 import { selectData } from '../features/dataSlice'
 import { RootState, AppDispatch } from '../app/store'
 import { setSearch } from '../features/searchSlice'
-import Card from './Card/Card'
+import Card from './Card'
 import { CardProps } from '@src/types'
 import Navbar from './Navbar'
 

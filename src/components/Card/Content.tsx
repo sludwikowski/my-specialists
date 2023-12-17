@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import Star from './Star'
 import Navigation from './Navigation'
-import { RootState } from '@src/app/store'
-import { addRating } from '@src/features/ratingSlice'
-import { CardProps } from '@src/types'
+import { RootState } from '../../app/store'
+import { addRating } from '../../features/ratingSlice'
+import { CardProps } from '../../types'
 
 export default function CardContent({ id, name, specialization, avatar }: CardProps) {
   const dispatch = useDispatch()
-  const totalRatings = useSelector((state: RootState) => state.rating.totalRatings[id] || 0)
-  const numRatings = useSelector((state: RootState) => state.rating.numRatings[id] || 0)
+  const totalRatings = useSelector((state: RootState) => state.rating?.totalRatings?.[id] || 0)
+  const numRatings = useSelector((state: RootState) => state.rating?.numRatings?.[id] || 0)
 
   const average = useMemo(() => (numRatings ? totalRatings / numRatings : 0), [totalRatings, numRatings])
 
