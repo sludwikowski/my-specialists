@@ -1,42 +1,23 @@
-import React, { useMemo, useState, useCallback, useEffect } from 'react'
+import React, { useMemo, useState, useCallback, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import _ from 'lodash'
-
-import { FixedSizeGrid as Grid, GridChildComponentProps } from 'react-window'
 
 import { selectData } from '../features/dataSlice'
 import { RootState, AppDispatch } from '../app/store'
 import { setSearch } from '../features/searchSlice'
 import Card from './Card/Card'
 import { CardProps } from '@src/types'
-import { SearchInput } from './Card/SearchInput'
+import Navbar from './Navbar'
 
 export default function List() {
   const dispatch: AppDispatch = useDispatch()
   const data = useSelector((state: RootState) => selectData(state))
   const search: string = useSelector((state: RootState) => state.search.value)
   const [inputValue, setInputValue] = useState('')
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth)
-
-    window.addEventListener('resize', handleResize)
-
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
-
-  const columnCount = windowWidth <= 768 ? 1 : 3
-  const columnWidth = windowWidth <= 768 ? windowWidth : 400
-  const gridWidth = windowWidth > 1200 ? 1200 : windowWidth
+  const [itemsPerPage, setItemsPerPage] = useState(100)
 
   const [tab, setTab] = useState<'all' | 'my'>('all')
   const mySpecialists: CardProps[] = useSelector((state: RootState) => state.mySpecialists.value)
-
-  const rowHeight = 442
-  const padding = 20
 
   const debouncedDispatch = _.debounce((searchValue: string) => {
     if (searchValue.length >= 3 || searchValue === '') {
@@ -65,59 +46,56 @@ export default function List() {
       .sort((a: CardProps, b: CardProps) => a.specialization.localeCompare(b.specialization))
   }, [data, search, mySpecialists, tab])
 
-  const cardRenderer = ({ columnIndex, rowIndex, style }: GridChildComponentProps) => {
-    const index = rowIndex * 3 + columnIndex
+  const paginatedData = useMemo(() => {
+    return filteredData.slice(0, itemsPerPage)
+  }, [filteredData, itemsPerPage])
+  const loader = useRef<HTMLDivElement>(null)
 
-    if (index >= filteredData.length) {
-      return null
+  const handleObserver = useCallback((entries: IntersectionObserverEntry[]) => {
+    const target = entries[0]
+    if (target.isIntersecting) {
+      setItemsPerPage(prev => prev + 20)
+    }
+  }, [])
+
+  useEffect(() => {
+    const options: IntersectionObserverInit = {
+      root: null,
+      rootMargin: '20px',
+      threshold: 1.0,
+    }
+    const observer = new IntersectionObserver(handleObserver, options)
+    if (loader.current) {
+      observer.observe(loader.current)
     }
 
-    const item = filteredData[index]
-
-    return (
-      <div
-        key={item.id}
-        style={{
-          ...style,
-          height: `calc(100% - ${padding}px)`,
-          flex: '33%',
-        }}>
-        <Card id={item.id} name={item.name} specialization={item.specialization} avatar={item.avatar} />
-      </div>
-    )
-  }
+    return () => observer.disconnect()
+  }, [handleObserver])
 
   return (
-    <main>
-      <header className="header">
-        <h3>
-          {tab === 'all'
-            ? `Favorite specialists (${data.length})`
-            : `My specialists (${mySpecialists.length})`}
-        </h3>
-        <div className="nav__btn-container">
-          <button className={tab === 'all' ? 'nav-btn' : 'nav-btn'} onClick={() => setTab('all')}>
-            All favorite
-          </button>
-          <button
-            className={tab === 'my' ? 'nav-btn inactive' : 'nav-btn inactive'}
-            onClick={() => setTab('my')}>
-            My specialists
-          </button>
-        </div>
-        <SearchInput value={inputValue} onChange={handleSearchChange} />
-      </header>
-      <section>
-        <Grid
-          columnCount={columnCount}
-          columnWidth={columnWidth}
-          height={900}
-          rowCount={Math.ceil(filteredData.length / columnCount)}
-          rowHeight={rowHeight + padding}
-          width={gridWidth}>
-          {cardRenderer}
-        </Grid>
-      </section>
-    </main>
+    <>
+      <Navbar
+        tab={tab}
+        data={data}
+        mySpecialists={mySpecialists}
+        setTab={setTab}
+        inputValue={inputValue}
+        handleSearchChange={handleSearchChange}
+      />
+      <main>
+        <section className="card-grid">
+          {paginatedData.map(item => (
+            <Card
+              key={item.id}
+              id={item.id}
+              name={item.name}
+              specialization={item.specialization}
+              avatar={item.avatar}
+            />
+          ))}
+          <div ref={loader}>{itemsPerPage < filteredData.length && <h4>Loading...</h4>}</div>
+        </section>
+      </main>
+    </>
   )
 }

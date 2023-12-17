@@ -7,16 +7,8 @@ interface SearchInputProps {
 }
 
 export const SearchInput = ({ value, onChange }: SearchInputProps) => (
-  <form>
-    <div className="search">
-      <input
-        className="search-input"
-        type="search"
-        placeholder="Search..."
-        value={value}
-        onChange={onChange}
-      />
-      <img src={icons.search} alt="search" className="search-img" />
-    </div>
+  <form className="search">
+    <input className="search-input" type="search" placeholder="Search..." value={value} onChange={onChange} />
+    <img src={icons.search} alt="search" className="search-img" />
   </form>
 )

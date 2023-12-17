@@ -5,9 +5,10 @@ import { MoreHorizontal, Heart } from 'lucide-react'
 import CardHeader from './Header'
 import CardContent from './Content'
 import CardFooter from './Footer'
+import { icons } from '../icon/Icons'
+
 import { addSpecialist, removeSpecialist } from '../../features/mySpecialistsSlice'
 import { RootState } from '@src/app/store'
-import { icons } from '../icon/Icons'
 import { CardProps } from '@src/types'
 
 export default function Card({ id, name, specialization, avatar }: CardProps) {
@@ -25,9 +26,9 @@ export default function Card({ id, name, specialization, avatar }: CardProps) {
   }
 
   return (
-    <div className="card">
+    <section className="card">
       <CardHeader
-        buttonLeftIcon={<MoreHorizontal className="icon-hover" />}
+        buttonLeftIcon={<MoreHorizontal />}
         buttonRightIcon={
           <div title={isOnList ? 'Remove from favorites' : 'Add to favorites'}>
             {isOnList ? (
@@ -40,6 +41,6 @@ export default function Card({ id, name, specialization, avatar }: CardProps) {
       />
       <CardContent id={id} avatar={avatar} name={name} specialization={specialization} />
       <CardFooter />
-    </div>
+    </section>
   )
 }

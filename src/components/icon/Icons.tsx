@@ -4,7 +4,7 @@ import starGray from '../../../assets/icons/star-gray.png'
 import search from '../../../assets/icons/search.png'
 import heart from '../../../assets/icons/heart.png'
 import message from '../../../assets/icons/message.png'
-import messagehover from '../../../assets/icons/message-hover.png'
+
 import calendar from '../../../assets/icons/calendar.png'
 import calendarhover from '../../../assets/icons/calendar-hover.png'
 import bell from '../../../assets/icons/bell.png'
@@ -17,7 +17,6 @@ export const icons = {
   search,
   heart,
   message,
-  messagehover,
   calendar,
   calendarhover,
   bell,

@@ -1,5 +1,4 @@
-// CardContent.tsx
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Star from './Star'
@@ -12,9 +11,10 @@ export default function CardContent({ id, name, specialization, avatar }: CardPr
   const dispatch = useDispatch()
   const totalRatings = useSelector((state: RootState) => state.rating.totalRatings[id] || 0)
   const numRatings = useSelector((state: RootState) => state.rating.numRatings[id] || 0)
-  const average = numRatings ? totalRatings / numRatings : 0
 
-  const [selectedStars, setSelectedStars] = useState([false, false, false, false, false])
+  const average = useMemo(() => (numRatings ? totalRatings / numRatings : 0), [totalRatings, numRatings])
+
+  const [selectedStars, setSelectedStars] = useState(Array(5).fill(false))
 
   const handleClick = (index: number) => {
     const newSelectedStars = selectedStars.map((_, i) => i <= index)
@@ -24,27 +24,27 @@ export default function CardContent({ id, name, specialization, avatar }: CardPr
 
   return (
     <>
-      <div className="avatar-container">
+      <section className="avatar-container">
         <img src={avatar} alt="Avatar" className="avatar" />
-      </div>
+      </section>
       <header>
         <h4>{name}</h4>
         <p>{specialization}</p>
       </header>
       <Navigation />
-      <section className="rating-section">
-        <div className="stars">
+      <article className="rating-section">
+        <aside className="stars">
           {selectedStars.map((isSelected, index) => (
             <div onClick={() => handleClick(index)} key={index}>
               <Star selected={isSelected} />
             </div>
           ))}
-        </div>
-        <div className="rating-info">
+        </aside>
+        <aside className="rating-info">
           <h3>{average.toFixed(1)}</h3>
           <span>({numRatings} ocen)</span>
-        </div>
-      </section>
+        </aside>
+      </article>
     </>
   )
 }
