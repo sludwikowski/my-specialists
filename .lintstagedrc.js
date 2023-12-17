@@ -1,3 +1,4 @@
 module.exports = {
-  '**/*.(ts|tsx|js|jsx)': filenames => [`npm run lint`, `npm run prettier --write .`],
+  '*.{js,jsx,ts,tsx}': ['eslint --fix', 'prettier --write'],
+  '*.{md,mdx,css,yaml,yml}': ['prettier --write'],
 }
