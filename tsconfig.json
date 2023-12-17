@@ -16,7 +16,8 @@
       "*": ["node_modules/*"],
       "@assets/*": ["./assets/*"],
       "@src/*": ["./src/*"]
-    }
+    },
+    "types": ["node", "jest", "@testing-library/jest-dom"],
   },
   "include": ["src/**/*", "tools/**/*"]
 }
