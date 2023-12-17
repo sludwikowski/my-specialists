@@ -1,6 +1,7 @@
 import React from 'react'
-import { CardProps } from '@src/types'
+
 import { SearchInput } from './Card/SearchInput'
+import { CardProps } from '@src/types'
 
 import '../styles/Navbar.scss'
 

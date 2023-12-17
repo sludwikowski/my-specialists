@@ -1,14 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-
-interface Specialist {
-  id: number
-  name: string
-  specialization: string
-  avatar: string
-}
+import { CardProps } from '@src/types'
 
 interface MySpecialistsState {
-  value: Specialist[]
+  value: CardProps[]
 }
 
 const initialState: MySpecialistsState = {
@@ -19,15 +13,15 @@ export const mySpecialistsSlice = createSlice({
   name: 'mySpecialists',
   initialState,
   reducers: {
-    addSpecialist: (state, action: PayloadAction<Specialist>) => {
+    addSpecialist: (state, action: PayloadAction<CardProps>) => {
       state.value.push(action.payload)
-      localStorage.setItem('mySpecialists', JSON.stringify(state.value)) // Zapisz zmiany do localStorage
+      localStorage.setItem('mySpecialists', JSON.stringify(state.value))
     },
     removeSpecialist: (state, action: PayloadAction<number>) => {
       state.value = state.value.filter(specialist => specialist.id !== action.payload)
-      localStorage.setItem('mySpecialists', JSON.stringify(state.value)) // Zapisz zmiany do localStorage
+      localStorage.setItem('mySpecialists', JSON.stringify(state.value))
     },
-    setSpecialists: (state, action: PayloadAction<Specialist[]>) => {
+    setSpecialists: (state, action: PayloadAction<CardProps[]>) => {
       state.value = action.payload
     },
     loadFromLocalStorage: state => {

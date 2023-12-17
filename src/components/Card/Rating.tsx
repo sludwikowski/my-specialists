@@ -1,8 +1,9 @@
 import React, { useState, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
 import Star from './Star'
-import { RootState } from '@src/app/store'
-import { addRating } from '@src/features/ratingSlice'
+import { RootState } from '../../app/store'
+import { addRating } from '../../features/ratingSlice'
 
 interface RatingProps {
   id: number

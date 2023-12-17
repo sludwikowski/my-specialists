@@ -2,14 +2,14 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { MoreHorizontal, Heart } from 'lucide-react'
 
-import CardHeader from './Header'
-import CardContent from './Content'
-import CardFooter from './Footer'
-import { icons } from '../icon/Icons'
+import CardHeader from './Card/Header'
+import CardContent from './Card/Content'
+import CardFooter from './Card/Footer'
+import { icons } from './icon/Icons'
 
-import { addSpecialist, removeSpecialist } from '../../features/mySpecialistsSlice'
-import { RootState } from '@src/app/store'
-import { CardProps } from '@src/types'
+import { addSpecialist, removeSpecialist } from '../features/mySpecialistsSlice'
+import { RootState } from '../app/store'
+import { CardProps } from '../types'
 
 export default function Card({ id, name, specialization, avatar }: CardProps) {
   const dispatch = useDispatch()
